@@ -1,6 +1,8 @@
 body{
-  background-color: #8805A8;
+  background-image:url(https://mllr0cek5p63.i.optimole.com/nwfuw2A.C-iv~47bcd/w:1920/h:1080/q:90/https://merrychristmasmemes.com/wp-content/uploads/2018/09/christmas-2018-wallpaper.jpg);
   padding: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .board{
   width: calc(100vh  - 50px);
@@ -8,7 +10,8 @@ body{
   display: grid;
   grid-gap: 10px;
   margin:  auto;
-  grid-template-columns: repeat(4,1fr)
+  grid-template-columns: repeat(4,1fr);
+  /* opacity: 0.8; */
 }
 .card-outer{
   perspective:1000px;
@@ -16,7 +19,6 @@ body{
   max-height: calc((100vw - 90px) / 5);
 }
 .card{
-  background-color: #FFB040; 
   border: none;
   border-radius: 5px;
   position: relative;
@@ -26,6 +28,7 @@ body{
   transform-style: preserve-3d;
   transition: all 0.3s;
   cursor: pointer;
+ 
 }
 .card .front, .card .back{
   position: absolute;
@@ -37,13 +40,24 @@ body{
   display: block;
   width: 100%;
   height: 100%;
+  background-color: rgba(173, 255, 47, 0.8);
+  border-radius: 5px;
   background-image: url('./addition/front.png');
-  background-size: contain;
+  background-size: 72%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .card .back{
-  background-color: #131113;
+  background-color: rgba(75, 38, 3, 0.8);
+  border: 1px solid greenyellow;
   transform: rotateY(180deg);
   border-radius: 5px;
+  color: #adff2f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 44px;
+  font-weight: bold;
 }
 .card-outer.flipped .card{
   transform: rotateY(0);
@@ -52,9 +66,10 @@ body{
   pointer-events: none;
 } 
 .stats {
-  color: azure;
+  color: red;
   padding: 20px;
   font-size: 20px;
+  width: fit-content;
 }
 .hide {
   opacity: 0;
@@ -69,6 +84,7 @@ body{
   justify-content: center;
   align-items: center;
   z-index: 1;
+  background-color: rgba(0, 0, 0, 0.49);
 }
 .winner-info {
   color: #FFB040;
@@ -77,6 +93,7 @@ body{
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 10px;
+  box-shadow: 0px 0px 18px 8px rgba(255, 255, 255, 0.31);
 }
 .winner-info button {
   background-color: sandybrown;
@@ -85,5 +102,16 @@ body{
   border-radius: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+.button {
+  background-color: red;
+  display: inline-block;
+  cursor: pointer;
+  width: 19px;
+  height: 19px;
+  border-radius: 90px;
+  position: absolute;
+  top: 16px;
+  left: 17px;
 }
 

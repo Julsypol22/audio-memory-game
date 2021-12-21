@@ -12,7 +12,13 @@ function App() {
   const [clicks, setClicks] = useState(0);
   const [won, setWon] = useState(false);
 
+  const play = (index) => {
+    flipCard(index)
+  }
+
   function flipCard(index){
+    let localActiveCards = []
+
     if(won) {
       setCards(shuffle([...Audio, ...Audio]));
       setFoundPairs([]);
@@ -21,6 +27,7 @@ function App() {
     }
     if (activeCards.length === 0) {
       setActiveCards([index])
+      localActiveCards=[index]
     }
     if (activeCards.length === 1) {
 
@@ -37,14 +44,20 @@ function App() {
         }, 1000);
       }
       setActiveCards([...activeCards, index])
+      localActiveCards=[...activeCards, index]
     }
     if(activeCards.length ===2) {
 
       setActiveCards([index])
+      localActiveCards=[index]
     }
     setClicks(clicks + 1)
-}
-  const playAudio = (i) => {
+
+
+    playAudio(index, localActiveCards)
+  }
+
+  const playAudio = (i, actCards) => {
     const audioFiles = document.getElementsByClassName("audio-files")
 
     for (const file of audioFiles) {
@@ -52,25 +65,60 @@ function App() {
     }
     const audio = document.getElementsByClassName("audio-files")[i]
     audio.play()
-    audio.currentTime = 5;
+    audio.currentTime = 2;
+    playWithInterval(actCards)
   };
+
+  const stopAll = () => {
+    const audioFiles = document.getElementsByClassName("audio-files")
+
+    for (const file of audioFiles) {
+      file.pause()
+      setActiveCards([])
+    }
+  }
+  
+  const [timer, setTimer] = useState()
+
+  const playWithInterval = (actCards) => {
+    const localTimer = timer
+    clearTimeout(localTimer)
+    setTimer(setTimeout(() => {
+      const audioFiles = document.getElementsByClassName("audio-files")
+
+      for (const file of audioFiles) {
+        file.pause()
+      }
+
+      if(actCards.length > 1) {
+        setActiveCards([])
+      }
+    }, 10000))
+  }
   
   return (
     <div>
       {won ?  <Winner /> : null}
+      {/* <div className="stats">
+           Found pairs: {foundPairs.length / 2}
+        </div> */}
+        <div className="button" onClick={stopAll}>
+        </div>
       <div className="board">
         {cards.map((card, index) => {
           const flippedToFront = (activeCards.indexOf(index) !== -1) || foundPairs.indexOf(index) !== -1;
           const hideFound = (foundPairs.indexOf(index) !== -1)
           return(
-            <div className={"card-outer " + ( flippedToFront ? 'flipped' : '') + (hideFound ? ' hide' : '')}  onClick={() => flipCard(index)} key={index}>
-              <div className="card" onClick={() => playAudio(index)}>
+            <div className={"card-outer " + ( flippedToFront ? 'flipped' : '') + (hideFound ? ' hide' : '')}  onClick={() => play(index)} key={index}>
+              <div className="card">
                 <div className="front">
                   <audio className='audio-files'>
                     <source src={card}></source>
                   </audio>
                 </div>
-                <div className="back"></div>
+                <div className="back">
+                  <p>{index+1}</p>
+                </div>
               </div>
             </div>
           )
@@ -78,9 +126,7 @@ function App() {
         )}
         
       </div>
-        <div className="stats">
-          Clicks: {clicks} &nbsp;&nbsp; Found pairs: {foundPairs.length / 2}
-        </div>
+        
     </div>
   );
 }

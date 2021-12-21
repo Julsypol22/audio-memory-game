@@ -10,8 +10,8 @@ function Winner() {
   return (
     <div className='winner-tab'>
       <div className='winner-info'>
-        <h2>You won the game!!!Congrats!!!</h2>
-        <button onClick={reset}>Reset the game</button>
+        <h2>Игра окончена!!!</h2>
+        <button onClick={reset}>Заново</button>
       </div>
      
     </div>
